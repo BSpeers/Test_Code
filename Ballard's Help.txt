@@ -1,0 +1,80 @@
+static const UINT8 reglocations[] = 
+{
+	COMMAND_REG,  <-- ADDRESS OF THE REGISTER
+	DRIVE_CAM,
+	TRIGGER,
+	DOOR_POS,
+	POL_POS
+}
+
+static const UINT8 regmask[]
+{
+	1<<1,
+	1<<2,
+	1<<5,
+	1<<0,
+	1<<7
+}
+
+static const BOOL inputpresent[]
+{
+	TRUE,
+	TRUE,
+	TRUE,
+	TRUE,
+	TRUE
+}
+
+static UINT8 debounce[]
+{
+	ct1 = 128,
+	ct2 = 128,
+	ct3 = 128,
+	ct4 = 128,
+	ct5 = 128
+}
+
+static STATE inputState[]
+{
+	UNKNOWN,
+	UNKNOWN,
+	UNKNOWN,
+	UNKNOWN,
+	UNKNOWN,
+}
+
+#define NUMBER_OF_INPUTS (5)
+
+UINT8 idx;
+
+UINT8 *ptr = (UINT8 *)reglocations;
+for(idx = 0; idx< NUMBER-OF_INPUTS; idx++)
+{
+	ptr = (UINT8 *)reglocations[idx];
+
+	if(inputpresent[idx])
+	{
+		if(ptr & regmask[idx])
+		{
+			if(debounce[idx] < 255)
+			{
+				debounce[idx]++;
+			}
+			else
+			{
+				inputState[idx] = CLOSED;
+			}
+		}
+		else
+		{
+			if(debounce[idx] < 0)
+			{
+				debounce[idx]--;
+			}
+			else
+			{
+				inputState[idx] = OPEN;
+			}
+		}
+	}
+}
