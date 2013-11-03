@@ -1,4 +1,6 @@
 1) Implementing a WDT when using tasks: 2x
 2) Implemnenting uC sleep when using tasks: after scheduler
-3) Structures for task array, but defines in an array
-4) Structure array for input debounce/validation
+3) Structures for task array, but defines in an array: Break variables to a separate array, and constant/pointers to static const
+4) Structure array for input debounce/validation: Follow Ballard's help file
+
+This is a trial, and the second rev to the file.
