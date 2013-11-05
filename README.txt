@@ -1,0 +1,1 @@
+This is the trial project to see how useful GitHub will be!
